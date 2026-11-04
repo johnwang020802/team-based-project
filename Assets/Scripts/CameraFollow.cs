@@ -2,21 +2,25 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player;
+    public Transform player; // The target the camera should follow
     
     [Header("Camera Settings")]
-    public float cameraHeight = 0f; // Change this to aim the camera higher/lower
-    public float smoothSpeed = 5f;  // Higher number = faster horizontal tracking
+    public float cameraHeight = 0f; // Allows you to aim the camera slightly above or below the player
+    public float smoothSpeed = 5f;  // A higher number means the camera catches up to the player faster
 
-    // We use LateUpdate for cameras so it moves AFTER the player finishes moving
+    // LateUpdate ensures the camera moves only AFTER the player has finished taking their steps for this frame
     void LateUpdate()
     {
+        // Make sure the player still exists (hasn't been destroyed/killed) before trying to follow them
         if (player != null)
         {
-            // Track the player's X, but lock the Y to your chosen height. Z stays at -10 for 2D.
+            // Create a target destination. 
+            // We copy the player's horizontal (X) position, use our custom height (Y), 
+            // and lock the depth (Z) to -10, which is standard for 2D cameras to see the world.
             Vector3 targetPosition = new Vector3(player.position.x, cameraHeight, -10f);
             
-            // Lerp glides the camera smoothly instead of snapping it rigidly
+            // Vector3.Lerp smoothly glides an object from Point A to Point B over time.
+            // It prevents the camera from feeling robotic and rigid.
             transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
         }
     }

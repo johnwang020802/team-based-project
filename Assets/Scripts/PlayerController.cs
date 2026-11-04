@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 12f; 
     
     [Tooltip("If you let go of Space early, multiply the upward speed by this decimal to cut the jump short.")]
-    public float jumpCutMultiplier = 0.5f; // --- NEW: Variable Jump Math ---
+    public float jumpCutMultiplier = 0.5f; // Variable Jump Math ---
 
     [Header("Ground Detection")]
     public Transform groundCheck; 
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
 
-        // 3. --- NEW: Check for Letting Go of Jump Early ---
+        // 3. Check for Letting Go of Jump Early ---
         // If the player releases the jump button AND the Rat is currently moving upwards...
         if (Input.GetButtonUp("Jump") && rb.linearVelocity.y > 0f)
         {
